@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <HomePage />
-      <LoginPage />
-      <!-- <IssoMenu />
+    <LoginPage />
+    <!-- <IssoMenu />
       <HelloWorld /> -->
   </div>
 </template>
@@ -10,17 +10,17 @@
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
 // import IssoMenu from '@/components/IssoMenu'
-import LoginPage from './pages/loginPage'
-import HomePage from "./pages/homePage"
+import LoginPage from "./pages/loginPage";
+import HomePage from "./pages/homePage";
 export default {
-  name: 'App',
+  name: "App",
   components: {
     // HelloWorld,
     // IssoMenu,
     LoginPage,
-    HomePage
-  }
-}
+    HomePage,
+  },
+};
 </script>
 
 <style>
