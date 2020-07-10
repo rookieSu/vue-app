@@ -11,8 +11,8 @@
 
 <script>
 import Vue from "vue";
-import { Menu, SubMenu } from "ant-design-vue";
-Vue.use([Menu, SubMenu]);
+import { Menu } from "ant-design-vue";
+Vue.use(Menu);
 export default {
   name: "IssoMenu",
 };

@@ -1,18 +1,24 @@
 <template>
   <div id="app">
-    <isso-menu />
-    <HelloWorld />
+    <HomePage />
+      <LoginPage />
+      <!-- <IssoMenu />
+      <HelloWorld /> -->
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import IssoMenu from '@/components/IssoMenu'
+// import HelloWorld from './components/HelloWorld.vue'
+// import IssoMenu from '@/components/IssoMenu'
+import LoginPage from './pages/loginPage'
+import HomePage from "./pages/homePage"
 export default {
   name: 'App',
   components: {
-    HelloWorld,
-    IssoMenu
+    // HelloWorld,
+    // IssoMenu,
+    LoginPage,
+    HomePage
   }
 }
 </script>
@@ -24,6 +30,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

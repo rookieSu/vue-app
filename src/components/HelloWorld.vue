@@ -18,14 +18,20 @@
 </template>
 
 <script>
-import Vue from "vue";
-import { Button, Radio, Icon } from "ant-design-vue";
+// import Vue from "vue";
+import { Button,  Icon, Radio } from "ant-design-vue";
 
 // import "ant-design-vue/dist/antd.css";
 
-Vue.use([Button, Radio, Icon]);
+// Vue.use([Button, Radio, Icon]);
 export default {
   name: "HelloWorld",
+  components:{
+    AButton: Button,
+    ARadioButton: Radio.Button,
+    ARadioGroup: Radio.Group,
+    AIcon: Icon
+  },
   data: function() {
     return {
       size: "default",
