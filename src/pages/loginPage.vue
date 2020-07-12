@@ -25,6 +25,7 @@ export default {
 #login-container {
   width: 100%;
   height: 600px;
+   background-image: url("../assets/654906.png");
 }
 
 #login-card {
