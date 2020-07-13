@@ -48,12 +48,12 @@
       <a-checkbox
         class="login-checkbox"
         v-decorator="[
-                'remember',
-                {
-                    valuePropName: 'checked',
-                    initialValue: true,
-                }
-            ]"
+          'remember',
+          {
+            valuePropName: 'checked',
+            initialValue: true,
+          },
+        ]"
       >
         Remember
       </a-checkbox>
@@ -73,16 +73,18 @@
 
 <script>
 import { Form, Input, Icon, Checkbox, Button } from "ant-design-vue";
-
+import { mapActions } from "vuex";
 export default {
   name: "LoginForm",
   methods: {
+    ...mapActions(["toLogin"]),
     handleSubmit(e) {
       e.preventDefault();
-      console.log(this.form);
       this.form.validateFields((err, values) => {
+        console.log("handleSubmit -> values", values);
         if (!err) {
-          console.log(values);
+          const loginParams = values;
+          this.toLogin(loginParams);
         }
       });
     },
@@ -114,7 +116,7 @@ export default {
   float: right;
 }
 
-#login-form .login-checkbox{
+#login-form .login-checkbox {
   float: left;
 }
 </style>

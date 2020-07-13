@@ -4,9 +4,11 @@ import Router from "vue-router";
 import LoginPage from "../pages/loginPage"
 import RegisterPage from "../pages/registerPage";
 import HomePage from "../pages/homePage"
+import Test from '@/components/Test'
+import FinancialStatement from '@/components/tables/FinancialStatement'
 Vue.use(Router);
 
-var routers = new Router({
+var router = new Router({
   routes: [
     {
       path: "/login",
@@ -17,11 +19,25 @@ var routers = new Router({
       path: "/register",
       name: "registerPage",
       component: RegisterPage,
+      children: [
+        {
+          path: "/register/test",
+          name: "test",
+          component: Test
+        }
+      ]
     },
     {
         path: "/home",
         name: "homePage",
-        component: HomePage
+        component: HomePage,
+        children: [
+          {
+            path: '/home/financialStatement',
+            component: FinancialStatement,
+            name: 'financialStatement'
+          }
+        ]
     },
     {
         path: "/",
@@ -30,4 +46,4 @@ var routers = new Router({
   ],
 });
 
-export default routers;
+export default router;

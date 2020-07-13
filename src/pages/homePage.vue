@@ -5,17 +5,12 @@
       <a-menu
         theme="dark"
         mode="horizontal"
-        :default-selected-keys="['1']"
         :style="{ lineHeight: '64px' }"
       >
-        <a-menu-item key="1">
-          nav 1
-        </a-menu-item>
-        <a-menu-item key="2">
-          nav 2
-        </a-menu-item>
-        <a-menu-item key="3">
-          nav 3
+        <a-menu-item style="float: right">
+          <a-button @click="handleLogout">
+            logout
+          </a-button>
         </a-menu-item>
       </a-menu>
     </a-layout-header>
@@ -23,14 +18,12 @@
       <a-layout-sider width="200" style="background: #fff">
         <a-menu
           mode="inline"
-          :default-selected-keys="['1']"
-          :default-open-keys="['sub1']"
           :style="{ height: '100%', borderRight: 0 }"
         >
           <a-sub-menu key="sub1">
             <span slot="title"><a-icon type="user" />subnav 1</span>
             <a-menu-item key="1">
-              option1
+              财务报表
             </a-menu-item>
             <a-menu-item key="2">
               option2
@@ -75,11 +68,6 @@
         </a-menu>
       </a-layout-sider>
       <a-layout style="padding: 0 24px 24px">
-        <a-breadcrumb style="margin: 16px 0">
-          <a-breadcrumb-item>Home</a-breadcrumb-item>
-          <a-breadcrumb-item>List</a-breadcrumb-item>
-          <a-breadcrumb-item>App</a-breadcrumb-item>
-        </a-breadcrumb>
         <a-layout-content
           :style="{
             background: '#fff',
@@ -88,14 +76,15 @@
             minHeight: '280px',
           }"
         >
-          Content
+          <router-view></router-view>
         </a-layout-content>
       </a-layout>
     </a-layout>
   </a-layout>
 </template>
 <script>
-import { Layout, Menu, Breadcrumb } from "ant-design-vue";
+import { Layout, Menu, } from "ant-design-vue";
+import { mapActions } from "vuex"
 export default {
   name: "HomePage",
   components: {
@@ -105,8 +94,12 @@ export default {
     AMenu: Menu,
     ASubMenu: Menu.SubMenu,
     AMenuItem: Menu.Item,
-    ABreadcrumb: Breadcrumb,
-    ABreadcrumbItem: Breadcrumb.Item,
+  },
+  methods:{
+    ...mapActions(["toLogout"]),
+    handleLogout: function(){
+        this.toLogout()
+    }
   },
   created: function() {
     localStorage.setItem("user", "su");
