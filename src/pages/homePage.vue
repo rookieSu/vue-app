@@ -1,12 +1,9 @@
 <template>
   <a-layout id="components-layout-demo-top-side-2">
-    <a-layout-header class="header">
-      <div  />
-      <a-menu
-        theme="dark"
-        mode="horizontal"
-        :style="{ lineHeight: '64px' }"
-      >
+    <a-layout-header class="header" :style="{ padding: '0 0' }">
+      <a-menu theme="dark" mode="horizontal" :style="{ lineHeight: '64px' }">
+        <a-menu-item> Welcome {{ username }} </a-menu-item>
+        <a-menu-item> 当前时间： {{ nowTime }} </a-menu-item>
         <a-menu-item style="float: right">
           <a-button @click="handleLogout">
             logout
@@ -16,24 +13,17 @@
     </a-layout-header>
     <a-layout>
       <a-layout-sider width="200" style="background: #fff">
-        <a-menu
-          mode="inline"
-          :style="{ height: '100%', borderRight: 0 }"
-        >
-          <a-sub-menu key="sub1">
-            <span slot="title"><a-icon type="user" />subnav 1</span>
-            <a-menu-item key="1">
-              财务报表
-            </a-menu-item>
-            <a-menu-item key="2">
-              option2
-            </a-menu-item>
-            <a-menu-item key="3">
-              option3
-            </a-menu-item>
-            <a-menu-item key="4">
-              option4
-            </a-menu-item>
+        <a-menu mode="inline" :style="{ height: '100%', borderRight: 0 }">
+          <a-sub-menu key="userOperationList.key">
+            <span slot="title">
+              <a-icon type="user" />{{ userOperationList.parent }}
+            </span>
+            <a-menu-item
+              v-for="list in userOperationList.children"
+              :key="list.key"
+              >
+              <router-link :to="list.path">{{ list.name }}</router-link>
+              </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="sub2">
             <span slot="title"><a-icon type="laptop" />subnav 2</span>
@@ -83,46 +73,58 @@
   </a-layout>
 </template>
 <script>
-import { Layout, Menu, } from "ant-design-vue";
-import { mapActions } from "vuex"
+import { Layout, Menu, Icon, Button } from "ant-design-vue";
+import { mapActions, mapState } from "vuex";
+import { userOperationList } from "../config/side-menu-data";
+import axios from "axios";
 export default {
   name: "HomePage",
   components: {
+    ALayout: Layout,
     ALayoutHeader: Layout.Header,
     ALayoutSider: Layout.Sider,
-    ALayout: Layout,
+    ALayoutContent: Layout.Content,
     AMenu: Menu,
     ASubMenu: Menu.SubMenu,
     AMenuItem: Menu.Item,
+    AIcon: Icon,
+    AButton: Button,
   },
-  methods:{
+  methods: {
     ...mapActions(["toLogout"]),
-    handleLogout: function(){
-        this.toLogout()
-    }
-  },
-  created: function() {
-    localStorage.setItem("user", "su");
-    let user = localStorage.getItem("user");
-    console.log(user);
-    if (!user) {
-      console.log(this.$router.replace("login"));
-    }
+    handleLogout: function() {
+      this.toLogout();
+    },
+    getTime: function() {
+      var date = new Date();
+      this.nowTime = `${date.getFullYear()}年${Number(date.getMonth()) +
+        1}月${date.getDate()}日:
+                ${Number(date.getHours()) +
+                  1}点${date.getMinutes()}分${date.getSeconds()}秒`;
+    },
   },
   data() {
     return {
       collapsed: false,
+      username: localStorage.getItem("user"),
+      nowTime: null,
+      timer: null,
+      userOperationList,
     };
+  },
+  created: function() {
+    let user = localStorage.getItem("user");
+    console.log(!user);
+    if (!user) {
+      this.$router.replace("login");
+    } else {
+      this.timer = setInterval(this.getTime, 1000);
+    }
+  },
+  beforeDestroy: function() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
   },
 };
 </script>
-
-<style>
-#components-layout-demo-top-side-2 .logo {
-  width: 120px;
-  height: 31px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px 28px 16px 0;
-  float: left;
-}
-</style>
